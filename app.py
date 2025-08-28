@@ -464,6 +464,11 @@ def index():
     """首頁"""
     return render_template('index.html')
 
+@app.route('/ultimate')
+def ultimate():
+    """終極界面"""
+    return render_template('ultimate_index.html')
+
 @app.route('/api/health')
 def health_check():
     """健康檢查"""
