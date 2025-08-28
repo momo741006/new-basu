@@ -1,3 +1,5 @@
 flask==3.1.2
 flask-cors==6.0.1
+gunicorn==21.2.0
+python-dotenv==1.0.0
 # pillar-engine==1.0.0  # 本地模組，通過相對路徑引用
