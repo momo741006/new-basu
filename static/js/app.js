@@ -32,7 +32,12 @@ class EnhancedBaziSystem {
                 
                 // 添加活動狀態
                 btn.classList.add('active');
-                document.getElementById(`${targetSection}-section`).classList.add('active');
+                const targetElement = document.getElementById(`${targetSection}-section`);
+                if (targetElement) {
+                    targetElement.classList.add('active');
+                } else {
+                    console.error(`找不到區域: ${targetSection}-section`);
+                }
             });
         });
     }
@@ -266,7 +271,20 @@ class EnhancedBaziSystem {
 
     // 創建五行圖表
     createWuxingChart(wuxingStats) {
-        const ctx = document.getElementById('wuxingChart').getContext('2d');
+        const chartContainer = document.getElementById('wuxingChart');
+        if (!chartContainer) {
+            console.warn('五行圖表容器不存在');
+            return;
+        }
+
+        // 檢查 Chart.js 是否可用
+        if (typeof Chart === 'undefined') {
+            console.warn('Chart.js 未載入，顯示文字版五行統計');
+            this.displayWuxingStats(wuxingStats);
+            return;
+        }
+
+        const ctx = chartContainer.getContext('2d');
         
         if (this.wuxingChart) {
             this.wuxingChart.destroy();
@@ -324,6 +342,40 @@ class EnhancedBaziSystem {
                 }
             }
         });
+    }
+
+    // 顯示文字版五行統計（當Chart.js不可用時）
+    displayWuxingStats(wuxingStats) {
+        const chartContainer = document.getElementById('wuxingChart');
+        if (!chartContainer) return;
+
+        const elements = Object.keys(wuxingStats);
+        const values = Object.values(wuxingStats);
+        const maxValue = Math.max(...values);
+
+        let html = '<div class="wuxing-text-stats">';
+        html += '<h4 style="color: #00d4ff; margin-bottom: 15px;">五行能量分佈</h4>';
+        
+        elements.forEach((element, index) => {
+            const value = values[index];
+            const percentage = ((value / maxValue) * 100).toFixed(1);
+            const barWidth = Math.max(percentage, 5); // 最小寬度5%
+            
+            html += `
+                <div class="wuxing-item" style="margin-bottom: 10px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px;">
+                        <span style="color: #ffffff; font-weight: bold;">${element}</span>
+                        <span style="color: #00d4ff;">${value}</span>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.1); height: 8px; border-radius: 4px; overflow: hidden;">
+                        <div style="background: linear-gradient(90deg, #00d4ff, #0099cc); height: 100%; width: ${barWidth}%; transition: width 0.5s ease;"></div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        html += '</div>';
+        chartContainer.outerHTML = `<div id="wuxingChart" style="padding: 20px;">${html}</div>`;
     }
 
     // 生成分析文本
@@ -427,7 +479,7 @@ class EnhancedBaziSystem {
 
 // 頁面載入完成後初始化系統
 document.addEventListener('DOMContentLoaded', () => {
-    new EnhancedBaziSystem();
+    window.enhancedBaziSystem = new EnhancedBaziSystem();
 });
 
 // 添加一些實用的CSS樣式
