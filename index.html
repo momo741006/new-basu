@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虹靈御所 - 八字人生兵法</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- 星空背景 -->
+    <div class="starfield">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+        <div class="stars3"></div>
+    </div>
+
+    <!-- 主容器 -->
+    <div class="app-container">
+        <!-- 標題區域 -->
+        <header class="header">
+            <h1 class="main-title rainbow-gradient">
+                <span class="title-icon">✨</span>
+                虹靈御所
+            </h1>
+            <p class="subtitle">八字人生兵法 - 探索命運奧秘，解讀人生密碼</p>
+        </header>
+
+        <!-- 導航選單 -->
+        <nav class="main-nav">
+            <button class="nav-btn active" data-section="input">🎯 資料輸入</button>
+            <button class="nav-btn" data-section="traditional">📊 傳統排盤</button>
+            <button class="nav-btn" data-section="legions">⚔️ 四時軍團</button>
+            <button class="nav-btn" data-section="analysis">📈 詳細分析</button>
+            <button class="nav-btn" data-section="encyclopedia">📚 八字百科</button>
+        </nav>
+
+        <!-- 區域 1：資料輸入區 -->
+        <section id="input-section" class="section active glass-card">
+            <div class="section-header">
+                <h2 class="neon-text">🎯 命理數據輸入</h2>
+                <p>請輸入您的出生資訊以開啟命運解析</p>
+            </div>
+            
+            <form id="baziForm" class="input-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name" class="form-label neon-label">姓名</label>
+                        <input type="text" id="name" class="form-control neon-input" placeholder="請輸入姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender" class="form-label neon-label">性別</label>
+                        <select id="gender" class="form-control neon-select" required>
+                            <option value="">請選擇性別</option>
+                            <option value="male">男性</option>
+                            <option value="female">女性</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="birthYear" class="form-label neon-label">出生年份</label>
+                        <select id="birthYear" class="form-control neon-select" required>
+                            <option value="">選擇年份</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthMonth" class="form-label neon-label">出生月份</label>
+                        <select id="birthMonth" class="form-control neon-select" required>
+                            <option value="">選擇月份</option>
+                            <option value="1">1月</option>
+                            <option value="2">2月</option>
+                            <option value="3">3月</option>
+                            <option value="4">4月</option>
+                            <option value="5">5月</option>
+                            <option value="6">6月</option>
+                            <option value="7">7月</option>
+                            <option value="8">8月</option>
+                            <option value="9">9月</option>
+                            <option value="10">10月</option>
+                            <option value="11">11月</option>
+                            <option value="12">12月</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthDay" class="form-label neon-label">出生日期</label>
+                        <select id="birthDay" class="form-control neon-select" required>
+                            <option value="">選擇日期</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="birthHour" class="form-label neon-label">出生時辰</label>
+                        <select id="birthHour" class="form-control neon-select" required>
+                            <option value="">選擇時辰</option>
+                            <option value="23">子時 (23:00-00:59)</option>
+                            <option value="1">丑時 (01:00-02:59)</option>
+                            <option value="3">寅時 (03:00-04:59)</option>
+                            <option value="5">卯時 (05:00-06:59)</option>
+                            <option value="7">辰時 (07:00-08:59)</option>
+                            <option value="9">巳時 (09:00-10:59)</option>
+                            <option value="11">午時 (11:00-12:59)</option>
+                            <option value="13">未時 (13:00-14:59)</option>
+                            <option value="15">申時 (15:00-16:59)</option>
+                            <option value="17">酉時 (17:00-18:59)</option>
+                            <option value="19">戌時 (19:00-20:59)</option>
+                            <option value="21">亥時 (21:00-22:59)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary neon-btn">
+                        <span class="btn-icon">🔮</span>
+                        生成命理分析
+                    </button>
+                </div>
+            </form>
+
+            <div class="privacy-notice">
+                <p>🔒 隱私保護：所有計算均在本地進行，不會保存或上傳您的個人資料</p>
+            </div>
+        </section>
+
+        <!-- 區域 2：傳統八字排盤區 -->
+        <section id="traditional-section" class="section glass-card">
+            <div class="section-header">
+                <h2 class="neon-text">📊 傳統八字排盤</h2>
+                <p>標準四柱八字命盤展示</p>
+            </div>
+            
+            <div id="traditional-content" class="traditional-content">
+                <div class="pillars-table">
+                    <table class="bazi-table">
+                        <thead>
+                            <tr>
+                                <th>時柱</th>
+                                <th>日柱</th>
+                                <th>月柱</th>
+                                <th>年柱</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="gan-row">
+                                <td id="hour-gan">-</td>
+                                <td id="day-gan" class="day-master">-</td>
+                                <td id="month-gan">-</td>
+                                <td id="year-gan">-</td>
+                            </tr>
+                            <tr class="zhi-row">
+                                <td id="hour-zhi">-</td>
+                                <td id="day-zhi">-</td>
+                                <td id="month-zhi">-</td>
+                                <td id="year-zhi">-</td>
+                            </tr>
+                            <tr class="ten-gods-row">
+                                <td id="hour-ten-god">-</td>
+                                <td>日主</td>
+                                <td id="month-ten-god">-</td>
+                                <td id="year-ten-god">-</td>
+                            </tr>
+                            <tr class="nayin-row">
+                                <td id="hour-nayin">-</td>
+                                <td id="day-nayin">-</td>
+                                <td id="month-nayin">-</td>
+                                <td id="year-nayin">-</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="additional-info">
+                    <div class="info-card">
+                        <h3>神煞分析</h3>
+                        <div id="shens-list" class="shens-list">
+                            <p>請先進行八字計算</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>五行統計</h3>
+                        <div id="wuxing-stats" class="wuxing-stats">
+                            <p>請先進行八字計算</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 區域 3：四時軍團分析區 -->
+        <section id="legions-section" class="section glass-card">
+            <div class="section-header">
+                <h2 class="neon-text">⚔️ 四時軍團分析</h2>
+                <p>探索您的四大人生軍團</p>
+            </div>
+            
+            <div id="legions-content" class="legions-content">
+                <div class="legions-grid">
+                    <!-- 家族兵團 -->
+                    <div class="legion-card" data-legion="0">
+                        <div class="legion-header" style="background: linear-gradient(135deg, #B8860B, #DAA520);">
+                            <h3>🏛️ 家族兵團</h3>
+                            <p>承載血脈傳承</p>
+                        </div>
+                        <div class="legion-body">
+                            <div class="legion-roles">
+                                <div class="role">
+                                    <span class="role-label">主將</span>
+                                    <span id="legion-0-commander" class="role-value">-</span>
+                                </div>
+                                <div class="role">
+                                    <span class="role-label">軍師</span>
+                                    <span id="legion-0-strategist" class="role-value">-</span>
+                                </div>
+                                <div class="role">
+                                    <span class="role-label">副將</span>
+                                    <span id="legion-0-deputy" class="role-value">-</span>
+                                </div>
+                            </div>
+                            <div class="legion-story">
+                                <h4>軍團故事</h4>
+                                <p id="legion-0-story">請先進行八字計算</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 成長兵團 -->
+                    <div class="legion-card" data-legion="1">
+                        <div class="legion-header" style="background: linear-gradient(135deg, #9ACD32, #ADFF2F);">
+                            <h3>🌱 成長兵團</h3>
+                            <p>見證人生歷練</p>
+                        </div>
+                        <div class="legion-body">
+                            <div class="legion-roles">
+                                <div class="role">
+                                    <span class="role-label">主將</span>
+                                    <span id="legion-1-commander" class="role-value">-</span>
+                                </div>
+                                <div class="role">
+                                    <span class="role-label">軍師</span>
+                                    <span id="legion-1-strategist" class="role-value">-</span>
+                                </div>
+                                <div class="role">
+                                    <span class="role-label">副將</span>
+                                    <span id="legion-1-deputy" class="role-value">-</span>
+                                </div>
+                            </div>
+                            <div class="legion-story">
+                                <h4>軍團故事</h4>
+                                <p id="legion-1-story">請先進行八字計算</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 本我兵團 -->
+                    <div class="legion-card" data-legion="2">
+                        <div class="legion-header" style="background: linear-gradient(135deg, #8A2BE2, #9932CC);">
+                            <h3>💎 本我兵團</h3>
+                            <p>展現真實自我</p>
+                        </div>
+                        <div class="legion-body">
+                            <div class="legion-roles">
+                                <div class="role">
+                                    <span class="role-label">主將</span>
+                                    <span id="legion-2-commander" class="role-value">-</span>
+                                </div>
+                                <div class="role">
+                                    <span class="role-label">軍師</span>
+                                    <span id="legion-2-strategist" class="role-value">-</span>
+                                </div>
+                                <div class="role">
+                                    <span class="role-label">副將</span>
+                                    <span id="legion-2-deputy" class="role-value">-</span>
+                                </div>
+                            </div>
+                            <div class="legion-story">
+                                <h4>軍團故事</h4>
+                                <p id="legion-2-story">請先進行八字計算</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 未來兵團 -->
+                    <div class="legion-card" data-legion="3">
+                        <div class="legion-header" style="background: linear-gradient(135deg, #FF6347, #FF7F50);">
+                            <h3>🚀 未來兵團</h3>
+                            <p>開創無限可能</p>
+                        </div>
+                        <div class="legion-body">
+                            <div class="legion-roles">
+                                <div class="role">
+                                    <span class="role-label">主將</span>
+                                    <span id="legion-3-commander" class="role-value">-</span>
+                                </div>
+                                <div class="role">
+                                    <span class="role-label">軍師</span>
+                                    <span id="legion-3-strategist" class="role-value">-</span>
+                                </div>
+                                <div class="role">
+                                    <span class="role-label">副將</span>
+                                    <span id="legion-3-deputy" class="role-value">-</span>
+                                </div>
+                            </div>
+                            <div class="legion-story">
+                                <h4>軍團故事</h4>
+                                <p id="legion-3-story">請先進行八字計算</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 區域 4：詳細分析區 -->
+        <section id="analysis-section" class="section glass-card">
+            <div class="section-header">
+                <h2 class="neon-text">📈 詳細分析</h2>
+                <p>能量平衡與主題分析</p>
+            </div>
+            
+            <div id="analysis-content" class="analysis-content">
+                <div class="analysis-grid">
+                    <div class="chart-card">
+                        <h3>五行平衡度</h3>
+                        <canvas id="wuxingChart" width="300" height="300"></canvas>
+                    </div>
+                    
+                    <div class="analysis-cards">
+                        <div class="theme-card">
+                            <h4>🧠 個性分析</h4>
+                            <p id="personality-analysis">請先進行八字計算</p>
+                        </div>
+                        <div class="theme-card">
+                            <h4>💼 事業運勢</h4>
+                            <p id="career-analysis">請先進行八字計算</p>
+                        </div>
+                        <div class="theme-card">
+                            <h4>💕 愛情關係</h4>
+                            <p id="love-analysis">請先進行八字計算</p>
+                        </div>
+                        <div class="theme-card">
+                            <h4>💰 財運分析</h4>
+                            <p id="wealth-analysis">請先進行八字計算</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 區域 5：八字百科區 -->
+        <section id="encyclopedia-section" class="section glass-card">
+            <div class="section-header">
+                <h2 class="neon-text">📚 八字百科</h2>
+                <p>傳統命理知識庫</p>
+            </div>
+            
+            <div id="encyclopedia-content" class="encyclopedia-content">
+                <div class="search-bar">
+                    <input type="text" id="encyclopedia-search" placeholder="搜尋八字知識..." class="search-input">
+                    <button class="search-btn">🔍</button>
+                </div>
+                
+                <div class="encyclopedia-grid">
+                    <div class="encyclopedia-card">
+                        <h3>天干</h3>
+                        <p>甲乙丙丁戊己庚辛壬癸</p>
+                        <div class="encyclopedia-details">
+                            <p>天干代表天時，共十個，分為陽干和陰干...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="encyclopedia-card">
+                        <h3>地支</h3>
+                        <p>子丑寅卯辰巳午未申酉戌亥</p>
+                        <div class="encyclopedia-details">
+                            <p>地支代表地利，共十二個，對應十二生肖...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="encyclopedia-card">
+                        <h3>十神</h3>
+                        <p>比肩、劫財、食神、傷官、正財、偏財、正官、七殺、正印、偏印</p>
+                        <div class="encyclopedia-details">
+                            <p>十神是八字分析的核心概念...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="encyclopedia-card">
+                        <h3>五行</h3>
+                        <p>金木水火土</p>
+                        <div class="encyclopedia-details">
+                            <p>五行相生相剋，是中國古代哲學的基礎...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="encyclopedia-card">
+                        <h3>神煞</h3>
+                        <p>天乙貴人、華蓋、將星、驛馬等</p>
+                        <div class="encyclopedia-details">
+                            <p>神煞是八字中的特殊星宿...</p>
+                        </div>
+                    </div>
+                    
+                    <div class="encyclopedia-card">
+                        <h3>納音</h3>
+                        <p>六十甲子納音五行</p>
+                        <div class="encyclopedia-details">
+                            <p>納音是古代音律與五行的結合...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 載入指示器 -->
+        <div id="loading" class="loading hidden">
+            <div class="loading-spinner"></div>
+            <p>正在計算命理分析...</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
+

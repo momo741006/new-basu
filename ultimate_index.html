@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虹靈御所八字人生兵法 v9.3 - 終極戰略分析系統</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- 主標題區域 -->
+    <header class="header">
+        <div class="container">
+            <h1 class="neon-title">虹靈御所八字人生兵法</h1>
+            <p class="version-text">v9.3 Ultimate Edition - 終極戰略分析系統</p>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- 區域1: 智能輸入區 -->
+            <section class="input-section" id="inputSection">
+                <div class="card input-card">
+                    <div class="card__header">
+                        <h2 class="section-title">🎯 智能命盤輸入系統</h2>
+                        <div class="mode-switcher">
+                            <button class="btn mode-btn active" data-mode="traditional">傳統模式</button>
+                            <button class="btn mode-btn" data-mode="expert">專家模式</button>
+                        </div>
+                    </div>
+                    <div class="card__body">
+                        <!-- 傳統模式輸入 -->
+                        <div class="input-mode" id="traditionalMode">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">姓名</label>
+                                    <input type="text" class="form-control" id="name" placeholder="請輸入姓名">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">性別</label>
+                                    <select class="form-control" id="gender">
+                                        <option value="male">男性</option>
+                                        <option value="female">女性</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">出生年份</label>
+                                    <select class="form-control" id="birthYear">
+                                        <option value="">請選擇年份</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">出生月份</label>
+                                    <select class="form-control" id="birthMonth">
+                                        <option value="">請選擇月份</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">出生日期</label>
+                                    <select class="form-control" id="birthDay">
+                                        <option value="">請選擇日期</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">出生時辰</label>
+                                    <select class="form-control" id="birthHour">
+                                        <option value="">請選擇時辰</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 專家模式輸入 -->
+                        <div class="input-mode hidden" id="expertMode">
+                            <div class="pillars-grid">
+                                <div class="pillar-input">
+                                    <h4 class="pillar-title">年柱</h4>
+                                    <div class="pillar-controls">
+                                        <select class="form-control" id="yearStem">
+                                            <option value="">天干</option>
+                                        </select>
+                                        <select class="form-control" id="yearBranch">
+                                            <option value="">地支</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="pillar-input">
+                                    <h4 class="pillar-title">月柱</h4>
+                                    <div class="pillar-controls">
+                                        <select class="form-control" id="monthStem">
+                                            <option value="">天干</option>
+                                        </select>
+                                        <select class="form-control" id="monthBranch">
+                                            <option value="">地支</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="pillar-input">
+                                    <h4 class="pillar-title">日柱</h4>
+                                    <div class="pillar-controls">
+                                        <select class="form-control" id="dayStem">
+                                            <option value="">天干</option>
+                                        </select>
+                                        <select class="form-control" id="dayBranch">
+                                            <option value="">地支</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="pillar-input">
+                                    <h4 class="pillar-title">時柱</h4>
+                                    <div class="pillar-controls">
+                                        <select class="form-control" id="hourStem">
+                                            <option value="">天干</option>
+                                        </select>
+                                        <select class="form-control" id="hourBranch">
+                                            <option value="">地支</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="generate-section">
+                            <button class="btn btn--primary btn--lg generate-btn" id="generateBtn">
+                                ⚔️ 生成命盤戰略
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 區域2: 八字排盤顯示區 -->
+            <section class="chart-section hidden" id="chartSection">
+                <div class="card chart-card">
+                    <div class="card__header">
+                        <h2 class="section-title">📜 八字排盤結果</h2>
+                    </div>
+                    <div class="card__body">
+                        <div class="bazi-chart" id="baziChart">
+                            <!-- 八字排盤內容將動態生成 -->
+                        </div>
+                        <div class="chart-details">
+                            <div class="nayin-display" id="nayinDisplay">
+                                <!-- 納音顯示 -->
+                            </div>
+                            <div class="shensha-display" id="shenshaDisplay">
+                                <!-- 神煞顯示 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 區域3: 四時軍團戰略分析區 -->
+            <section class="legions-section hidden" id="legionsSection">
+                <h2 class="section-title neon-text">🏰 四時軍團戰略分析</h2>
+                <div class="legions-grid" id="legionsGrid">
+                    <!-- 軍團卡片將動態生成 -->
+                </div>
+            </section>
+
+            <!-- 區域4: 深度分析儀表板 -->
+            <section class="analysis-section hidden" id="analysisSection">
+                <h2 class="section-title neon-text">📊 深度戰略儀表板</h2>
+                <div class="analysis-grid">
+                    <div class="card analysis-card">
+                        <div class="card__header">
+                            <h3>五行平衡分析</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="wuxingChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card analysis-card">
+                        <div class="card__header">
+                            <h3>陰陽比例</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="yinyangChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card analysis-card">
+                        <div class="card__header">
+                            <h3>用神喜忌</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="recommendations" id="recommendations">
+                                <!-- 推薦內容將動態生成 -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card analysis-card">
+                        <div class="card__header">
+                            <h3>強弱分析</h3>
+                        </div>
+                        <div class="card__body">
+                            <div class="strength-analysis" id="strengthAnalysis">
+                                <!-- 強弱分析內容將動態生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 區域5: 八字知識庫 -->
+            <section class="knowledge-section" id="knowledgeSection">
+                <div class="card knowledge-card">
+                    <div class="card__header">
+                        <h2 class="section-title">📚 八字兵法知識庫</h2>
+                        <div class="knowledge-tabs">
+                            <button class="btn tab-btn active" data-tab="basics">基礎概念</button>
+                            <button class="btn tab-btn" data-tab="advanced">高級理論</button>
+                            <button class="btn tab-btn" data-tab="examples">實例分析</button>
+                        </div>
+                    </div>
+                    <div class="card__body">
+                        <div class="knowledge-content">
+                            <div class="tab-content active" id="basicsTab">
+                                <h3>八字基礎概念</h3>
+                                <div class="concept-grid">
+                                    <div class="concept-item">
+                                        <h4>🌳 十天干</h4>
+                                        <p>甲乙木、丙丁火、戊己土、庚辛金、壬癸水，代表天之氣</p>
+                                    </div>
+                                    <div class="concept-item">
+                                        <h4>🏔️ 十二地支</h4>
+                                        <p>子丑寅卯辰巳午未申酉戌亥，代表地之氣</p>
+                                    </div>
+                                    <div class="concept-item">
+                                        <h4>⚔️ 十神</h4>
+                                        <p>比肩、劫財、食神、傷官、偏財、正財、七殺、正官、偏印、正印</p>
+                                    </div>
+                                    <div class="concept-item">
+                                        <h4>🔮 神煞</h4>
+                                        <p>特殊的吉凶標記，影響命運走向</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-content" id="advancedTab">
+                                <h3>高級理論</h3>
+                                <p>深入的八字理論知識，包括格局分析、用神取用、大運流年等...</p>
+                            </div>
+                            <div class="tab-content" id="examplesTab">
+                                <h3>實例分析</h3>
+                                <p>著名人物命盤分析案例...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Loading 動畫 -->
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p class="loading-text">正在計算命盤...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
