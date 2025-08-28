@@ -13,8 +13,20 @@ import sys
 import json
 import math
 
+# 載入環境變數
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    # 如果沒有安裝 python-dotenv，跳過環境變數載入
+    pass
+
 app = Flask(__name__, static_folder='static', template_folder='templates')
 CORS(app)
+
+# 配置設定
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
+app.config['DEBUG'] = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 # 權威八字計算引擎類 (基於AuthorityBaziCalculator)
 class AuthorityBaziCalculator:
@@ -507,7 +519,15 @@ def static_files(filename):
 
 if __name__ == '__main__':
     print("🌈 虹靈御所八字人生兵法系統啟動中...")
-    print("📡 API服務地址: http://0.0.0.0:5000")
-    print("🎯 前端界面: http://0.0.0.0:5000")
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    
+    # 從環境變數獲取配置
+    host = os.environ.get('HOST', '0.0.0.0')
+    port = int(os.environ.get('PORT', 5000))
+    debug = os.environ.get('DEBUG', 'False').lower() == 'true'
+    
+    print(f"📡 API服務地址: http://{host}:{port}")
+    print(f"🎯 前端界面: http://{host}:{port}")
+    print(f"🔧 調試模式: {'開啟' if debug else '關閉'}")
+    
+    app.run(host=host, port=port, debug=debug)
 
