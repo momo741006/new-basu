@@ -491,6 +491,13 @@ class BaziSystem {
         const canvas = document.getElementById('wuxingChart');
         if (!canvas) return;
         
+        // Check if Chart.js is available
+        if (typeof Chart === 'undefined') {
+            console.log('Chart.js not available, using fallback display');
+            this.createWuxingFallback(canvas);
+            return;
+        }
+        
         const ctx = canvas.getContext('2d');
         
         // 計算五行分布
@@ -536,6 +543,13 @@ class BaziSystem {
         const canvas = document.getElementById('yinyangChart');
         if (!canvas) return;
         
+        // Check if Chart.js is available
+        if (typeof Chart === 'undefined') {
+            console.log('Chart.js not available, using fallback display');
+            this.createYinyangFallback(canvas);
+            return;
+        }
+        
         const ctx = canvas.getContext('2d');
         
         let yangCount = 0, yinCount = 0;
@@ -577,6 +591,37 @@ class BaziSystem {
                 }
             }
         });
+    }
+
+    createWuxingFallback(canvas) {
+        // Create a simple text-based fallback for wuxing distribution
+        const fallbackDiv = document.createElement('div');
+        fallbackDiv.className = 'chart-fallback';
+        fallbackDiv.innerHTML = `
+            <h4 style="color: #FFFFFF; text-align: center; margin: 20px 0;">五行分布</h4>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; text-align: center;">
+                <div style="background: #32CD32; padding: 10px; border-radius: 5px; color: white;">木</div>
+                <div style="background: #FF6347; padding: 10px; border-radius: 5px; color: white;">火</div>
+                <div style="background: #DAA520; padding: 10px; border-radius: 5px; color: white;">土</div>
+                <div style="background: #C0C0C0; padding: 10px; border-radius: 5px; color: black;">金</div>
+                <div style="background: #4169E1; padding: 10px; border-radius: 5px; color: white;">水</div>
+            </div>
+        `;
+        canvas.parentNode.replaceChild(fallbackDiv, canvas);
+    }
+
+    createYinyangFallback(canvas) {
+        // Create a simple text-based fallback for yin/yang distribution
+        const fallbackDiv = document.createElement('div');
+        fallbackDiv.className = 'chart-fallback';
+        fallbackDiv.innerHTML = `
+            <h4 style="color: #FFFFFF; text-align: center; margin: 20px 0;">陰陽分布</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; text-align: center;">
+                <div style="background: #FFD700; padding: 20px; border-radius: 50%; color: black;">陽</div>
+                <div style="background: #8A2BE2; padding: 20px; border-radius: 50%; color: white;">陰</div>
+            </div>
+        `;
+        canvas.parentNode.replaceChild(fallbackDiv, canvas);
     }
 
     displayRecommendations() {
